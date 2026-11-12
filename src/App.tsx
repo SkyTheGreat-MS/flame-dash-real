@@ -12,13 +12,18 @@ const initialReadings: Readings = { oxygen: 21, airflow: 12, pressure: 101.3, te
 function App() {
   const [activeSector, setActiveSector] = useState<Sector>(0);
   const [activePreset, setActivePreset] = useState('01');
-  const [selectedMaterial, setSelectedMaterial] = useState(0);
+  const [selectedMaterial, setSelectedMaterial] = useState<number | null>(null);
   const [readings, setReadings] = useState<Readings>(initialReadings);
   const [liveReadings, setLiveReadings] = useState<Readings>(initialReadings);
   const [armedControl, setArmedControl] = useState<ControlKey | null>(null);
 
   useEffect(() => {
-    const onKeyDown = (event: KeyboardEvent) => { if (event.key === 'Escape') setArmedControl(null); };
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        setArmedControl(null);
+        setSelectedMaterial(null);
+      }
+    };
     window.addEventListener('keydown', onKeyDown);
     return () => window.removeEventListener('keydown', onKeyDown);
   }, []);
@@ -40,7 +45,7 @@ function App() {
       <StatusPanel activeSector={activeSector} activePreset={activePreset} onSelectSector={selectSector} onLoadPreset={loadPreset} />
       <div className="dashboard-main">
         <InstrumentControls values={readings} live={liveReadings} armedControl={armedControl} onArm={setArmedControl} onChange={updateReading} />
-        <MaterialRisk activeSector={activeSector} selectedMaterial={selectedMaterial} onSelectMaterial={setSelectedMaterial} />
+        <MaterialRisk activeSector={activeSector} selectedMaterial={selectedMaterial} onSelectMaterial={index => setSelectedMaterial(current => current === index ? null : index)} />
       </div>
     </section>
     <SimulationViews airflow={readings.airflow} onAirflowChange={value => updateReading('airflow', value)} />

@@ -85,9 +85,9 @@ Open a docked, right-edge inspection panel when a material row is activated. On 
 
 Transitions communicate state only. Keep them under 120ms and linear or ease-out; avoid spring physics, pulsing ornaments, and fake loading indicators. Controls must show focus, selected, and armed states. Provide keyboard equivalents for pointer interactions and do not rely on hover as the only way to expose an action.
 
-## React Native implementation notes
+## Vite and React implementation notes
 
-The source specifications include web/CSS examples. In this React Native application, implement equivalent surfaces with `View`, `Text`, `Pressable`, SVG, and platform-supported styles. Do not introduce HTML-only controls or CSS properties. Use responsive layout constraints rather than assuming a browser viewport, and preserve the same token values in the shared theme where practical.
+This project is a Vite-powered React web app. Build the interface with semantic HTML, React components, SVG, and CSS. Use native buttons and keyboard-operable controls; avoid HTML range sliders. Keep layouts responsive to browser width and use CSS variables for the shared tokens. Do not introduce blur, glass, gradients, or animation that conflicts with the instrument-first visual direction.
 
 ## Content and data integrity
 
